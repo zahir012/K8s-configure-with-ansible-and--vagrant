@@ -19,7 +19,6 @@ Create a dedicated SSH key pair to connect to the VMs:
 
 ssh-keygen -b 4096
 
-agrantfile
 Create Vagrantfile [use repo Vagrantfile script]
 
 To provision one master node with 2 CPU and 2GB of RAM, and two worker nodes with 1 CPU and 2GB RAM each, add the following to the newly created Vagrantfile:
