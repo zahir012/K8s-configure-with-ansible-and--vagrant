@@ -1,0 +1,33 @@
+- hosts: masters
+  become: yes
+  tasks:
+    - name: Initialize the Kubernetes cluster using kubeadm
+      command: kubeadm init --apiserver-advertise-address="192.168.20.[ip from vm]" --apiserver-cert-extra-sans="192.168.50.10" --pod-network-cidr=10.10.42.0/16
+
+    - name: Setup kubeconfig for vagrant user
+      command: "{{ item }}"
+      with_items:
+      - mkdir -p /home/vagrant/.kube
+      - cp -i /etc/kubernetes/admin.conf /home/vagrant/.kube/config
+      - chown vagrant:vagrant /home/vagrant/.kube/config
+
+    - name: Copy admin.conf to user's kube config
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: /home/vagrant/.kube/config
+        remote_src: yes
+        owner: vagrant
+
+    - name: Install Pod network (Calico)
+      become_user: vagrant
+      shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml 
+      args:
+        chdir: $HOME
+        
+    - name: Generate join command
+      command: kubeadm token create --print-join-command
+      register: join_command
+
+    - name: Copy join command to local file
+      become: false
+      
