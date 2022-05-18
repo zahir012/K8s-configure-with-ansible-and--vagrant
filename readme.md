@@ -20,9 +20,7 @@ Create a dedicated SSH key pair to connect to the VMs:
 ssh-keygen -b 4096
 
 agrantfile
-Create Vagrantfile
-
-touch Vagrantfile
+Create Vagrantfile [use repo Vagrantfile script]
 
 To provision one master node with 2 CPU and 2GB of RAM, and two worker nodes with 1 CPU and 2GB RAM each, add the following to the newly created Vagrantfile:
 
@@ -31,7 +29,7 @@ Once we have virtual machines ready, we can start configuring them installing th
 
 Create a hosts.yml file that will contain IP addresses and SSH credentials to VMs
 
-touch hosts.yml
+touch hosts.yml[use repo IP_hosts.yml script]
 
 Configure nodes and install kubernetes
 
@@ -45,14 +43,15 @@ Install containerd runtime
 Add apt repo for kubernetes
 Install Kubernetes components
 
-nitialize master node
+Initialize master node
 Create playbook for master node
 
-touch master-node-init.yml
+touch master-node-init.yml[use repo master-node-init.yml]
 
 Initialize worker nodes
 Create playbook for worker nodes
 
-touch worker-node-init.yml
+touch worker-node-init.yml [use repo worker-node-init.yml]
 
- 
+To configure k8s dashboard and metrix server[use repo Install_Kubernetes_Dashboard]
+for exposing as nodePortwith RBAC [use repo dashboard-service.yaml] 
